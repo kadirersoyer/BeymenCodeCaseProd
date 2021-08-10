@@ -10,12 +10,12 @@ namespace BeymenCodeCase.Services.Redis
 {
     public class RedisService : IRedisService
     {
-        private readonly IConnectionMultiplexer _connectionMultiplexer;
+        private readonly IConnectionMultiplexer _connectionMultiplexer = null;
 
-        public RedisService(IConnectionMultiplexer connectionMultiplexer)
-        {
-            _connectionMultiplexer = connectionMultiplexer;
-        }
+        //public RedisService(IConnectionMultiplexer connectionMultiplexer)
+        //{
+        //    _connectionMultiplexer = connectionMultiplexer;
+        //}
 
         public void Connect()
         {

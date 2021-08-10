@@ -3,6 +3,7 @@ using BeymenCodeCase.Common;
 using BeymenCodeCase.Services.Factory;
 using BeymenCodeCase.Services.Helper;
 using BeymenCodeCase.Services.Redis;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace BeymenCodeCase.Services.Configuration
 {
     public class ConfigurationReaderService
     {
-        private static IContainer Container { get; set; }
 
         private readonly string applicationName;
         private readonly string connectionString;
@@ -28,13 +28,20 @@ namespace BeymenCodeCase.Services.Configuration
 
         public T GetValue<T>(string key)
         {
+            
             // Connect Redis And Get Key Value From Redis Storage
-            var redisService = _serviceHelper.GetService<IRedisService>();
-            var builedKey = redisService.KeyBuilder(applicationName, key, true);
+            using (var scope = StaticHelper.GetScope())
+            {
+                var creatorFactory = scope.ServiceProvider.GetService<ICreatorFactory>();
 
-            var data = redisService.GetValueCacheValueAsync(builedKey).Result;
+                var redisService = creatorFactory.GetService(NoSqlType.Redis) as IRedisService;
 
-            return JsonConvert.DeserializeObject<T>(data);
+                var builedKey = redisService.KeyBuilder(applicationName, key, true);
+
+                var data = redisService.GetValueCacheValueAsync(builedKey).Result;
+
+                return JsonConvert.DeserializeObject<T>(data);
+            }
         }
     }
 }

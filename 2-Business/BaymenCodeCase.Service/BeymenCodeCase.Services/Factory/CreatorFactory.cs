@@ -30,13 +30,13 @@ namespace BeymenCodeCase.Services.Factory
             switch (noSqlType)
             {
                 case NoSqlType.Redis:
-                    noSqlService = ActivatorUtilities.CreateInstance<IRedisService>(_serviceProvider);
+                    noSqlService = ActivatorUtilities.CreateInstance<RedisService>(_serviceProvider);
                     break;
                 case NoSqlType.Elastic:
-                    noSqlService = ActivatorUtilities.CreateInstance<IRedisService>(_serviceProvider);
+                    noSqlService = ActivatorUtilities.CreateInstance<RedisService>(_serviceProvider);
                     break;
                 case NoSqlType.Mongo:
-                    noSqlService = ActivatorUtilities.CreateInstance<IRedisService>(_serviceProvider);
+                    noSqlService = ActivatorUtilities.CreateInstance<RedisService>(_serviceProvider);
                     break;
                 default:
                     break;

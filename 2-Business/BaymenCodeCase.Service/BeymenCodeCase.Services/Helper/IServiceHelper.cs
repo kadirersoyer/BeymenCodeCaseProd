@@ -14,5 +14,6 @@ namespace BeymenCodeCase.Services.Helper
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T GetService<T>();
+
     }
 }
